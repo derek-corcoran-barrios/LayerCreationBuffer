@@ -57,12 +57,13 @@ Codes$Selected <- make.names(Codes$Selected)
 
 Landuse <- c("Bosque.Nativo", "Cultivos", "Grava","Oceano", "Pastizales", "Matorrales", "Sup.impermeables",  "Suelo.arenoso", "Plantación.de.árboles")
 
-Distancias <-c(30, 600, 1100, 2200, 2800, 3300)
+Distancias <- round(seq(from = 30, to = 5000, length.out = 10), -2)
+Distancias[1] <- 30
 
 LandCover <- rast(LandCover)
 
 #for(i in 4:length(Distancias)){
-for(i in 5:length(Distancias)){
+for(i in 1:length(Distancias)){
   dir.create("TempTerra")
   terraOptions(tempdir = paste0(getwd(), "/TempTerra"))
   rasterOptions(tmpdir = paste0(getwd(), "/TempRaster"))
@@ -79,18 +80,10 @@ for(i in 5:length(Distancias)){
     Props[[j]] <- raster::focal(raster::raster(LandCover), w=f, pclass)
   }
   Props <- Props %>% purrr::reduce(stack)
+  Props <- Props %>% raster::mask(Puntos_Hull)
   names(Props) <- Landuse %>% janitor::make_clean_names()
-  raster::writeRaster(Props, paste0("Proportions_", Distancias[i],".tif"), overwrite=TRUE)
+  Props <- round(rast(Props)*100)
+  terra::writeRaster(Props, paste0("Proportions_", Distancias[i],".tif"), overwrite=TRUE)
   unlink(paste0(getwd(), "/TempTerra"), recursive = T, force = T)
   unlink(paste0(getwd(), "/TempRaster"), recursive = T, force = T)
 }
-
-
-
-
-
-plot(LandCover)
-plot(pf)
-
-
-
