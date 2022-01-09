@@ -1,7 +1,7 @@
 Creating buffers of Landuse
 ================
 Derek Corcoran
-2022-01-01
+2022-01-07
 
 # 1 Methods
 
@@ -21,7 +21,17 @@ corresponding to a 5050 meter buffer of all the points
 
 For that we used the databased generated in (Zhao et al. 2016), and used
 both the raster and terra packages to create the layers (Hijmans 2021a,
-2021b)
+2021b), using the `TerrCapasCovertura.R` script
+
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+From the sampling point,
+
+| Distance | bosque\_nativo | cultivos | grava | oceano | pastizales | matorrales | sup\_impermeables | suelo\_arenoso | plantacion\_de\_arboles |
+|---------:|---------------:|---------:|------:|-------:|-----------:|-----------:|------------------:|---------------:|------------------------:|
+|      600 |              0 |        1 |     1 |     51 |          3 |          8 |                31 |              1 |                       3 |
+|     2200 |              0 |        1 |     1 |     59 |          3 |         10 |                21 |              1 |                       2 |
+|     4400 |              0 |        1 |     1 |     59 |          3 |         10 |                21 |              1 |                       2 |
 
 # 2 References
 
